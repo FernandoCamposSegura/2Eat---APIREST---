@@ -1,0 +1,749 @@
+openapi: 3.0.1
+servers:
+  - url: https://api.toeat.com
+info:
+  description: API para la gestión de la aplicación ToEat
+  version: "1.0"
+  title: 2Eat API
+tags:
+  - name: Establishments
+    description: Operaciones sobre los establecimientos
+  - name: Users
+    description: Operaciones sobre los usuarios
+  - name: Comments
+    description: Operaciones sobre los comentarios de usuario
+  - name: Favourites
+    description: Operaciones sobre las listas de favoritos
+paths:
+  /establishments:
+    get:
+      tags:
+        - Establishments
+      summary: Lista de establecimientos
+      description: Obtiene la información de todos los establecimientos registrados
+      operationId: getEstablishments
+      parameters:
+        - name: name
+          in: query
+          description: Filtra por nombre de establecimiento
+          required: false
+          schema:
+            type: string
+            default: ''
+        - name: longitude
+          in: query
+          description: Filtra por nombre de establecimiento
+          required: false
+          schema:
+            type: number
+            default: ''
+        - name: latitude
+          in: query
+          description: Filtra por nombre de establecimiento
+          required: false
+          schema:
+            type: number
+            default: ''
+      responses:
+        '200':
+          description: Se devuelve el listado de establecimientos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EstablishmentOutDTO'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Establishments
+      summary: Registro de establecimientos
+      description: Registra un nuevo establecimiento en la aplicación
+      operationId: postEstablishments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstablishmentInDTO'
+      responses:
+        '201':
+          description: El establecimiento se ha registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstablishmentOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /establishment/{establishmentId}:
+    parameters:
+      - $ref: '#/components/parameters/EstablishmentId'
+    get:
+      tags:
+        - Establishments
+      summary: Obtiene la información de un establecimiento determinado
+      description: Obtiene la información del establecimiento cuyo id se pasa en la URL
+      operationId: getEstablishmentById
+      responses:
+        '200':
+          description: Se devuelve la información del establecimiento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstablishmentInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Establishments
+      summary: Actualiza la información de un establecimiento determinado
+      description: Actualiza la información del establecimiento cuyo id se pasa en la URL
+      operationId: updateEstablishmentById
+      responses:
+        '200':
+          description: Se devuelve la información del establecimiento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstablishmentInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Establishments
+      summary: Da de baja el un establecimiento
+      description: Dada de baja de un establecimiento cuyo id se pasa en la URL
+      operationId: deleteEstablishment
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Lista de usuarios
+      description: Obtiene la información de todos los usuarios registrados
+      operationId: getUsers
+      parameters:
+        - name: email
+          in: query
+          description: Filtra por email de usuario
+          required: false
+          schema:
+            type: string
+            default: ''
+        - name: password
+          in: query
+          description: Filtra por contraseña de usuario
+          required: false
+          schema:
+            type: string
+            default: ''
+      responses:
+        '200':
+          description: Se devuelve el listado de usuarios correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserOutDTO'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Users
+      summary: Registro de usuarios
+      description: Registra un nuevo usuarios en la aplicación
+      operationId: postUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInDTO'
+      responses:
+        '201':
+          description: El usuario se ha registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /user/{userId}:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    get:
+      tags:
+        - Users
+      summary: Obtiene la información de un usuario determinado
+      description: Obtiene la información del usuario cuyo id se pasa en la URL
+      operationId: getUserById
+      responses:
+        '200':
+          description: Se devuelve la información del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Users
+      summary: Actualiza la información de un usuario determinado
+      description: Actualiza la información del usuario cuyo id se pasa en la URL
+      operationId: updateUserById
+      responses:
+        '200':
+          description: Se devuelve la información del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Users
+      summary: Dasa de baja de un usuario
+      description: Da de baja el usuario cuyo id se pasa en la URL
+      operationId: deleteUser
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /comment:
+    get:
+      tags:
+        - Comments
+      summary: Lista de comentarios
+      description: Obtiene la información de todos los comentarios registrados
+      operationId: getComment
+      parameters:
+        - name: user_id
+          in: query
+          description: Filtra por los comentarios de un usuario
+          required: false
+          schema:
+            type: string
+            default: ''
+        - name: establishment_id
+          in: query
+          description: Filtra por los comentarios de un establecimiento
+          required: false
+          schema:
+            type: string
+            default: ''
+      responses:
+        '200':
+          description: Se devuelve el listado de comentarios correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentOutDTO'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Comments
+      summary: Registro de comentarios
+      description: Registra un nuevo comentarios en la aplicación
+      operationId: postComments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInDTO'
+      responses:
+        '201':
+          description: El comentario se ha registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /comment/{commentId}:
+    parameters:
+      - $ref: '#/components/parameters/CommentId'
+    get:
+      tags:
+        - Comments
+      summary: Obtiene la información de un comentario determinado
+      description: Obtiene la información del comentario cuyo id se pasa en la URL
+      operationId: getCommentById
+      responses:
+        '200':
+          description: Se devuelve la información del comentario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Comments
+      summary: Actualiza la información de un comentario determinado
+      description: Actualiza la información del comentario cuyo id se pasa en la URL
+      operationId: updateCommentById
+      responses:
+        '200':
+          description: Se devuelve la información del comentario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Comments
+      summary: Dada de baja de un comentario
+      description: Da de baja el comentario cuyo id se pasa en la URL
+      operationId: deleteComment
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /favourite:
+    get:
+      tags:
+        - Favourites
+      summary: Lista de favoritos
+      description: Obtiene la información de todos los favoritos registrados
+      operationId: getFavourite
+      parameters:
+        - name: user_id
+          in: query
+          description: Filtra por los favoritos de un usuario
+          required: false
+          schema:
+            type: number
+            default: ''
+        - name: establishment_id
+          in: query
+          description: Filtra por los favoritos de un establecimiento
+          required: false
+          schema:
+            type: number
+            default: ''
+      responses:
+        '200':
+          description: Se devuelve el listado de favoritos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FavouriteOutDTO'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Favourites
+      summary: Registro de favoritos
+      description: Registra un nuevo favorito en la aplicación
+      operationId: postFavourite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FavouriteInDTO'
+      responses:
+        '201':
+          description: El favorito se ha registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavouriteOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /favourite/{favouriteId}:
+    parameters:
+      - $ref: '#/components/parameters/FavouriteId'
+    get:
+      tags:
+        - Favourites
+      summary: Obtiene la información de un favorito determinado
+      description: Obtiene la información del favorito cuyo id se pasa en la URL
+      operationId: getFavouriteById
+      responses:
+        '200':
+          description: Se devuelve la información del favorito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavouriteInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Favourites
+      summary: Actualiza la información de un favorito determinado
+      description: Actualiza la información del favorito cuyo id se pasa en la URL
+      operationId: updateFavouriteById
+      responses:
+        '200':
+          description: Se devuelve la información del favorito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavouriteInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Favourites
+      summary: Dada de baja de un favorito
+      description: Da de baja el favorito cuyo id se pasa en la URL
+      operationId: deleteFavourite
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    EstablishmentOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id del establecimiento
+          example: 1
+        name:
+          type: string
+          description: Nombre del establecimiento
+          example: Pollo Loco
+        description:
+          type: string
+          description: Descripción del establecimiento
+          example: Restaurante de comida mexicana
+        adress:
+          type: string
+          description: Dirección del establecimiento
+          example: Av/ Duque De Palma 102
+        longitude:
+          type: number
+          description: Longitud en el mapa del establecimiento
+          example: 39.59002265639826 
+        latitude:
+          type: number
+          description: Latitud en el mapa del establecimiento
+          example: 2.6690487962296228
+    EstablishmentInDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del establecimiento
+          example: Pollo Loco
+        description:
+          type: string
+          description: Descripción del establecimiento
+          example: Restaurante de comida mexicana
+        adress:
+          type: string
+          description: Dirección del establecimiento
+          example: Av/ Duque De Palma 102
+        longitude:
+          type: number
+          description: Longitud en el mapa del establecimiento
+          example: 39.59002265639826 
+        latitude:
+          type: number
+          description: Latitud en el mapa del establecimiento
+          example: 2.6690487962296228
+    UserOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id del usuario
+          example: 1
+        username:
+          type: string
+          description: Nombre de usuario del usuario
+          example: nando1903
+        email:
+          type: string
+          description: Email del usuario
+          example: nando@test.com
+        password:
+          type: string
+          description: Contraseña del usuario
+          example: As45v
+        dateOfBirth:
+          type: object
+          description: Fecha de nacimientos del usuario
+          example: 12-02-1998
+    UserInDTO:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Nombre de usuario del usuario
+          example: nando1903
+        email:
+          type: string
+          description: Email del usuario
+          example: nando@test.com
+        password:
+          type: string
+          description: Contraseña del usuario
+          example: As45v
+        dateOfBirth:
+          type: object
+          description: Fecha de nacimientos del usuario
+          example: 12-02-1998
+    CommentOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id del comentario
+          example: 1
+        message:
+          type: string
+          description: Descripción del mensaje
+          example: Es un restaurante excelente. ¡Lo recomiendo 100%!
+        rating:
+          type: number
+          description: Puntuación asignada al comentario
+          example: 8
+        datePost:
+          type: object
+          description: Fecha del comentario
+          example: 15-10-2023
+        user_id:
+          type: number
+          description: Id del usuario que escribe el comentario
+          example: 1
+        establishment_id:
+          type: number
+          description: Id del establecimiento que recibe el comentario
+          example: 1
+    CommentInDTO:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del mensaje
+          example: Es un restaurante excelente. ¡Lo recomiendo 100%!
+        rating:
+          type: number
+          description: Puntuación asignada al comentario
+          example: 8
+        datePost:
+          type: object
+          description: Fecha del comentario
+          example: 15-10-2023
+        user_id:
+          type: number
+          description: Id del usuario que escribe el comentario
+          example: 1
+        establishment_id:
+          type: number
+          description: Id del establecimiento que recibe el comentario
+          example: 1
+    FavouriteOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id del favorito
+          example: 1
+        user_id:
+          type: number
+          description: Id del usuario que agrega el elemento
+          example: 1
+        establishment_id:
+          type: number
+          description: Id del establecimiento agregado
+          example: 1
+    FavouriteInDTO:
+      type: object
+      properties:
+        user_id:
+          type: number
+          description: Id del usuario que agrega el elemento
+          example: 1
+        establishment_id:
+          type: number
+          description: Id del establecimiento agregado
+          example: 1
+    EstablishmentInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/EstablishmentInDTO'
+      properties:
+        id:
+          type: integer
+          description: Establishment ID
+          example: 254
+    UserInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/UserInDTO'
+      properties:
+        id:
+          type: integer
+          description: User ID
+          example: 254
+    CommentInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/CommentInDTO'
+      properties:
+        id:
+          type: integer
+          description: Establishment ID
+          example: 254
+    FavouriteInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/FavouriteInDTO'
+      properties:
+        id:
+          type: integer
+          description: Favourite ID
+          example: 254
+    BadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código de estado
+          example: 400
+        message:
+          type: string
+          description: Mensaje de error
+          example: Error de validación
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorField'
+    ErrorField:
+      type: object
+      description: Error de validación en un campo de entrada
+      properties:
+        fieldName:
+          type: string
+          description: El campo donde se ha producido el error
+          example: capacity
+        message:
+          type: string
+          description: Mensaje de error asociado con el campo
+          example: capacity must be greater than 0
+    NotFound:
+      type: object
+      properties:
+        code:
+          type: string
+          description: código de estado
+          example: 404
+        message:
+          type: string
+          description: Mensaje de error
+          example: Bus not found
+    InternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código de estado
+          example: 500
+        message:
+          type: string
+          description: Mensaje de error
+          example: Internal Server Error
+  responses:
+    NoContent:
+      description: No Content
+    BadRequest:
+      description: Error de validación
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequest'
+    NotFound:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InternalServerError'
+  parameters:
+    EstablishmentId:
+      name: establishmentId
+      in: path
+      description: Establishment ID
+      required: true
+      schema:
+        type: integer
+    UserId:
+      name: userId
+      in: path
+      description: Establishment ID
+      required: true
+      schema:
+        type: integer
+    CommentId:
+      name: commentId
+      in: path
+      description: Comment ID
+      required: true
+      schema:
+        type: integer
+    FavouriteId:
+      name: favouriteId
+      in: path
+      description: Favourite ID
+      required: true
+      schema:
+        type: integer
