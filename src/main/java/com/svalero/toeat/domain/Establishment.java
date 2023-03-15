@@ -1,16 +1,15 @@
 package com.svalero.toeat.domain;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -45,4 +44,8 @@ public class Establishment {
     @NotNull
     @NotBlank(message = "longitude is required")
     private long longitude;
+
+    @OneToMany(mappedBy = "establishment")
+    @JsonBackReference(value = "establishment_comment")
+    private List<Comment> comments;
 }
