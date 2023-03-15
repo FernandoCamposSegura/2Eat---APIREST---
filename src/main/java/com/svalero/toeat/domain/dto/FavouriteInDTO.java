@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FavouriteInDTO {
-    private int user_id;
-    private int establishment_id;
+    private long user_id;
+    private long establishment_id;
 }

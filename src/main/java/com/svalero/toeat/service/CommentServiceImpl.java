@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.svalero.toeat.domain.Comment;
 import com.svalero.toeat.domain.Establishment;
@@ -14,6 +15,7 @@ import com.svalero.toeat.repository.CommentRepository;
 import com.svalero.toeat.repository.EstablishmentRepository;
 import com.svalero.toeat.repository.UserRepository;
 
+@Service
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
@@ -21,8 +23,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     CommentRepository commentRepository;
+
     @Autowired
     UserRepository userRepository;
+    
     @Autowired
     EstablishmentRepository establishmentRepository;
 

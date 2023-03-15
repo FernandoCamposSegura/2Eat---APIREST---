@@ -1,25 +1,19 @@
 package com.svalero.toeat.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "comment")
+@Entity(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +32,7 @@ public class Comment {
     @Column
     @NotNull
     @NotBlank(message = "date is required")
-    private Date datePost;
+    private LocalDate datePost;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
