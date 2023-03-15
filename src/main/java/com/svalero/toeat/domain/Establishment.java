@@ -48,4 +48,10 @@ public class Establishment {
     @OneToMany(mappedBy = "establishment")
     @JsonBackReference(value = "establishment_comment")
     private List<Comment> comments;
+
+    @ManyToMany
+    @JoinTable(name="service",
+            joinColumns = @JoinColumn(name="establishment_id"),
+            inverseJoinColumns = @JoinColumn(name="favourite_id"))
+    private List<Favourite> favourites;
 }

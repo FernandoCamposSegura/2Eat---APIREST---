@@ -44,4 +44,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonBackReference(value = "user_comment")
     private List<Comment> comments;
+
+    @ManyToMany
+    @JoinTable(name="service",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="favourite_id"))
+    private List<Favourite> favourites;
 }
