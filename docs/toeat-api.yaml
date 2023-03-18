@@ -32,14 +32,14 @@ paths:
             default: ''
         - name: longitude
           in: query
-          description: Filtra por nombre de establecimiento
+          description: Filtra por longitud de localización
           required: false
           schema:
             type: number
             default: ''
         - name: latitude
           in: query
-          description: Filtra por nombre de establecimiento
+          description: Filtra por latitud de localización
           required: false
           schema:
             type: number
@@ -53,13 +53,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/EstablishmentOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
       tags:
         - Establishments
       summary: Registro de establecimientos
-      description: Registra un nuevo establecimiento en la aplicación
+      description: Registra un nuevo establecimiento
       operationId: postEstablishments
       requestBody:
         content:
@@ -93,6 +95,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EstablishmentInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -110,6 +114,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EstablishmentInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -123,6 +129,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -158,6 +166,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -198,6 +208,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -215,6 +227,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -228,6 +242,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -245,14 +261,14 @@ paths:
           description: Filtra por los comentarios de un usuario
           required: false
           schema:
-            type: string
+            type: number
             default: ''
         - name: establishment_id
           in: query
           description: Filtra por los comentarios de un establecimiento
           required: false
           schema:
-            type: string
+            type: number
             default: ''
       responses:
         '200':
@@ -263,6 +279,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CommentOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -303,6 +321,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -320,6 +340,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -333,6 +355,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -368,6 +392,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FavouriteOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -408,6 +434,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FavouriteInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -425,6 +453,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FavouriteInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -438,6 +468,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -619,8 +651,24 @@ components:
       properties:
         id:
           type: integer
-          description: Establishment ID
+          description: ID del establecimiento
           example: 254
+        name:
+          type: string
+          description: Nombre del establecimiento
+          example: El Padrino
+        description:
+          type: string
+          description: Descripción del establecimiento
+          example: Restaurante italiano
+        longitude:
+          type: number
+          description: Longitud en el mapa del establecimiento
+          example: 39.59002265639826
+        latitude:
+          type: number
+          description: Latitud en el mapa del establecimiento
+          example: 39.59002265639826
     UserInfo:
       type: object
       allOf:
@@ -628,8 +676,20 @@ components:
       properties:
         id:
           type: integer
-          description: User ID
-          example: 254
+          description: ID del usuario
+          example: 89
+        username:
+          type: string
+          description: Nombre del usuario
+          example: fede99
+        email:
+          type: string
+          description: Correo electrónico del usuario
+          example: fede@test.com
+        password:
+          type: string
+          description: Contraseña del usuario
+          example: r3rbhu2
     CommentInfo:
       type: object
       allOf:
@@ -637,8 +697,28 @@ components:
       properties:
         id:
           type: integer
-          description: Establishment ID
-          example: 254
+          description: ID del comentario
+          example: 128
+        rating:
+          type: integer
+          description: Valoración del comentario asociado a un estalecimiento
+          example: 8
+        message:
+          type: string
+          description: Mensaje que contiene el comentario
+          example: Tanto la comida como el servicio han sido impecables
+        datePost:
+          type: object
+          description: Fecha de publicación del comentario
+          example: 15-10-2023
+        user_id:
+          type: integer
+          description: ID del usuario asociado
+          example: 34
+        establishment_id:
+          type: integer
+          description: ID del establecimiento asociado
+          example: 15
     FavouriteInfo:
       type: object
       allOf:
@@ -647,7 +727,15 @@ components:
         id:
           type: integer
           description: Favourite ID
-          example: 254
+          example: 45
+        user_id:
+          type: integer
+          description: ID del usuario asociado
+          example: 34
+        establishment_id:
+          type: integer
+          description: ID del establecimiento asociado
+          example: 15
     BadRequest:
       type: object
       properties:

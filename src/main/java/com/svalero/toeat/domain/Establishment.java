@@ -27,7 +27,7 @@ public class Establishment {
 
     @Column
     @NotNull
-    @NotBlank(message = "adress is required")
+    @NotBlank(message = "description is required")
     private String description;
 
     @Column
@@ -49,9 +49,7 @@ public class Establishment {
     @JsonBackReference(value = "establishment_comment")
     private List<Comment> comments;
 
-    @ManyToMany
-    @JoinTable(name="service",
-            joinColumns = @JoinColumn(name="establishment_id"),
-            inverseJoinColumns = @JoinColumn(name="favourite_id"))
+    @OneToMany(mappedBy = "establishment")
+    @JsonBackReference(value = "establishment_favourite")
     private List<Favourite> favourites;
 }

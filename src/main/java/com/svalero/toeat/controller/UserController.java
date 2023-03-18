@@ -27,6 +27,11 @@ public class UserController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable long id) throws NotFoundException {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+
     @PostMapping("/users")
     public ResponseEntity<User> addUser(@RequestBody UserInDTO userInDTO) {
         User user = userService.addUser(userInDTO);

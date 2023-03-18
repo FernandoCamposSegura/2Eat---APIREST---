@@ -9,6 +9,8 @@ import com.svalero.toeat.exception.NotFoundException;
 public interface FavouriteService {
     List<Favourite> findAll();
 
+    Favourite getFavouriteById(long id) throws NotFoundException;
+
     Favourite addFavourite(FavouriteInDTO favouriteInDTO) throws NotFoundException;
 
     void deleteFavourite(long id) throws NotFoundException;

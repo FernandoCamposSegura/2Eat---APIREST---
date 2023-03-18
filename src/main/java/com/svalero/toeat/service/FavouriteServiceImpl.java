@@ -2,7 +2,6 @@ package com.svalero.toeat.service;
 
 import java.util.List;
 
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +17,6 @@ import com.svalero.toeat.repository.UserRepository;
 @Service
 public class FavouriteServiceImpl implements FavouriteService {
 
-    //@Autowired
-    //private Mapper modelMapper;
-
     @Autowired
     FavouriteRepository favouriteRepository;
     @Autowired
@@ -34,6 +30,12 @@ public class FavouriteServiceImpl implements FavouriteService {
     }
 
     @Override
+    public Favourite getFavouriteById(long id) throws NotFoundException {
+        return favouriteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(new Favourite()));
+    }
+
+    @Override
     public Favourite addFavourite(FavouriteInDTO favouriteInDTO) throws NotFoundException {
         Favourite favourite = new Favourite();
 
@@ -43,12 +45,9 @@ public class FavouriteServiceImpl implements FavouriteService {
         Establishment establishment = establishmentRepository.findById(favouriteInDTO.getEstablishment_id())
                 .orElseThrow(() -> new NotFoundException(new Establishment()));
 
-        /*
-        modelMapper.map(favouriteInDTO, favourite);
         favourite.setUser(user);
         favourite.setEstablishment(establishment);
-         */
-        
+         
         return favouriteRepository.save(favourite); 
     }
 
@@ -70,11 +69,8 @@ public class FavouriteServiceImpl implements FavouriteService {
         Establishment establishment = establishmentRepository.findById(favouriteInDTO.getEstablishment_id())
                 .orElseThrow(() -> new NotFoundException(new Establishment()));
 
-                /*
-        modelMapper.map(commentInDTO, commentModified);
-        commentModified.setUser(user);
-        commentModified.setEstablishment(establishment);
-                 */
+        favouriteModified.setUser(user);
+        favouriteModified.setEstablishment(establishment);
 
         return favouriteRepository.save(favouriteModified);
     }

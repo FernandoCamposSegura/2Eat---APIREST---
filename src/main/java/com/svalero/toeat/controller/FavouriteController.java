@@ -11,43 +11,43 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.FieldError;
 
-import com.svalero.toeat.domain.Establishment;
-import com.svalero.toeat.domain.dto.EstablishmentInDTO;
+import com.svalero.toeat.domain.Favourite;
+import com.svalero.toeat.domain.dto.FavouriteInDTO;
 import com.svalero.toeat.exception.ErrorMessage;
 import com.svalero.toeat.exception.NotFoundException;
-import com.svalero.toeat.service.EstablishmentService;
+import com.svalero.toeat.service.FavouriteService;
 
 @RestController
-public class EstablishmentController {
+public class FavouriteController {
     @Autowired
-    private EstablishmentService establishmentService;
+    private FavouriteService favouriteService;
 
-    @GetMapping("/establishments")
-    public ResponseEntity<List<Establishment>> getEstablishments() {
-        return new ResponseEntity<>(establishmentService.findAll(), HttpStatus.OK);
+    @GetMapping("/favourites")
+    public ResponseEntity<List<Favourite>> getFavourites() {
+        return new ResponseEntity<>(favouriteService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/establishments/{id}")
-    public ResponseEntity<Establishment> getEstablishmentById(@PathVariable long id) throws NotFoundException {
-        return new ResponseEntity<>(establishmentService.getEstablishmentById(id), HttpStatus.OK);
+    @GetMapping("/favourites/{id}")
+    public ResponseEntity<Favourite> getFavouriteById(@PathVariable long id) throws NotFoundException {
+        return new ResponseEntity<>(favouriteService.getFavouriteById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/establishments")
-    public ResponseEntity<Establishment> addEstablishment(@RequestBody EstablishmentInDTO establishmentInDTO) {
-        Establishment establishment = establishmentService.addEstablishment(establishmentInDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(establishment);
+    @PostMapping("/favourites")
+    public ResponseEntity<Favourite> addFavourite(@RequestBody FavouriteInDTO favouriteInDTO) throws NotFoundException{
+        Favourite favourite = favouriteService.addFavourite(favouriteInDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(favourite);
     }
 
-    @DeleteMapping("/establishments/{id}")
-    public ResponseEntity<Void> deleteEstablishment(@PathVariable long id) throws NotFoundException {
-        establishmentService.deleteEstablishment(id);
+    @DeleteMapping("/favourites/{id}")
+    public ResponseEntity<Void> deleteFavourite(@PathVariable long id) throws NotFoundException {
+        favouriteService.deleteFavourite(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/establishments/{id}")
-    public ResponseEntity<Establishment> modifyEstablishment(@PathVariable long id, @RequestBody EstablishmentInDTO establishmentInDTO) throws NotFoundException{
-        Establishment establishment = establishmentService.modifyEstablishment(id, establishmentInDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(establishment);
+    @PutMapping("/favourites/{id}")
+    public ResponseEntity<Favourite> modifyfavourite(@PathVariable long id, @RequestBody FavouriteInDTO favouriteInDTO) throws NotFoundException{
+        Favourite favourite = favouriteService.modifyFavourite(id, favouriteInDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(favourite);
     }
 
     @ExceptionHandler(NotFoundException.class)

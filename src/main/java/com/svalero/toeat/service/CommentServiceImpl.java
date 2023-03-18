@@ -1,5 +1,6 @@
 package com.svalero.toeat.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -33,6 +34,20 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findAll() {
         return commentRepository.findAll();
+    }
+
+    @Override
+    public Comment getCommentById(long id) throws NotFoundException {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(new Comment()));
+    }
+
+    @Override
+    public List<Comment> getCommentsByEstablishment(long establishment_id) throws NotFoundException {
+         Establishment establishment = establishmentRepository.findById(establishment_id)
+                .orElseThrow(() -> new NotFoundException(new Establishment()));
+
+        return commentRepository.findCommentsByEstablishmentId(establishment.getId());
     }
 
     @Override
@@ -77,5 +92,4 @@ public class CommentServiceImpl implements CommentService {
 
         return commentRepository.save(commentModified);
     }
-    
 }
