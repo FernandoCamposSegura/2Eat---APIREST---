@@ -32,6 +32,11 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     }
 
     @Override
+    public List<Establishment> getEstablishmentsByName(String name) {
+        return establishmentRepository.findEstablishmentsByName(name);
+    }
+
+    @Override
     public Establishment addEstablishment(EstablishmentInDTO establishmentInDTO) {
         Establishment establishment = new Establishment();
 

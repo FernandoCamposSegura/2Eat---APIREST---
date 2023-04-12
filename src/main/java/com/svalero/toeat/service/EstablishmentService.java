@@ -11,6 +11,8 @@ public interface EstablishmentService {
 
     Establishment getEstablishmentById(long id) throws NotFoundException;
 
+    List<Establishment> getEstablishmentsByName(String name);
+
     Establishment addEstablishment(EstablishmentInDTO establishmentInDTO);
 
     void deleteEstablishment(long id) throws NotFoundException;
