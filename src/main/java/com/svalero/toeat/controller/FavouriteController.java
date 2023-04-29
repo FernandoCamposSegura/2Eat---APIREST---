@@ -23,9 +23,17 @@ public class FavouriteController {
     private FavouriteService favouriteService;
 
     @GetMapping("/favourites")
-    public ResponseEntity<List<Favourite>> getFavourites() {
-        return new ResponseEntity<>(favouriteService.findAll(), HttpStatus.OK);
-    }
+    public ResponseEntity<List<Favourite>> getFavourites(
+            @RequestParam(name = "user_id", defaultValue = "0", required = false) String user_id,
+            @RequestParam(name = "establishment_id", defaultValue = "0", required = false) String establishment_id) throws NotFoundException {
+        if(String.valueOf(user_id).equals("0") && String.valueOf(establishment_id).equals("0") )
+            return new ResponseEntity<>(favouriteService.findAll(), HttpStatus.OK);
+        
+        long userId = Long.valueOf(user_id);
+        long establishmentId = Long.valueOf(establishment_id);
+        return new ResponseEntity<>(favouriteService.getFavouriteByUserAndEstablishment(userId, establishmentId), HttpStatus.OK);    
+        
+     }
 
     @GetMapping("/favourites/{id}")
     public ResponseEntity<Favourite> getFavouriteById(@PathVariable long id) throws NotFoundException {
@@ -33,7 +41,7 @@ public class FavouriteController {
     }
 
     @PostMapping("/favourites")
-    public ResponseEntity<Favourite> addFavourite(@RequestBody FavouriteInDTO favouriteInDTO) throws NotFoundException{
+    public ResponseEntity<Favourite> addFavourite(@RequestBody FavouriteInDTO favouriteInDTO) throws NotFoundException {
         Favourite favourite = favouriteService.addFavourite(favouriteInDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(favourite);
     }
@@ -45,7 +53,8 @@ public class FavouriteController {
     }
 
     @PutMapping("/favourites/{id}")
-    public ResponseEntity<Favourite> modifyfavourite(@PathVariable long id, @RequestBody FavouriteInDTO favouriteInDTO) throws NotFoundException{
+    public ResponseEntity<Favourite> modifyfavourite(@PathVariable long id, @RequestBody FavouriteInDTO favouriteInDTO)
+            throws NotFoundException {
         Favourite favourite = favouriteService.modifyFavourite(id, favouriteInDTO);
         return ResponseEntity.status(HttpStatus.OK).body(favourite);
     }

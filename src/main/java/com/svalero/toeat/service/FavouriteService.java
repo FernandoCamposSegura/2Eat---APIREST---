@@ -11,6 +11,8 @@ public interface FavouriteService {
 
     Favourite getFavouriteById(long id) throws NotFoundException;
 
+    List<Favourite> getFavouriteByUserAndEstablishment(long user_id, long establishment_id) throws NotFoundException;
+
     Favourite addFavourite(FavouriteInDTO favouriteInDTO) throws NotFoundException;
 
     void deleteFavourite(long id) throws NotFoundException;

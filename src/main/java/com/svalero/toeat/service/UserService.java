@@ -10,6 +10,8 @@ public interface UserService {
     List<User> findAll();
 
     User getUserById(long id) throws NotFoundException;
+    
+    User getUserByUsernameAndPassword(String username, String password) throws NotFoundException;
 
     User addUser(UserInDTO userInDTO);
 

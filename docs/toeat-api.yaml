@@ -52,7 +52,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EstablishmentOutDTO'
+                  $ref: '#/components/schemas/Establishment'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -62,7 +62,7 @@ paths:
         - Establishments
       summary: Registro de establecimientos
       description: Registra un nuevo establecimiento
-      operationId: postEstablishments
+      operationId: addEstablishment
       requestBody:
         content:
           application/json:
@@ -74,12 +74,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EstablishmentOutDTO'
+                $ref: '#/components/schemas/Establishment'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /establishment/{establishmentId}:
+  /establishments/{establishmentId}/comments:
+    parameters:
+      - $ref: '#/components/parameters/EstablishmentId'
+    get:
+      tags:
+        - Establishments
+      summary: Obtiene los comentarios de un establecimiento determinado
+      description: Obtiene los comentarios del establecimiento cuyo id se pasa en la URL
+      operationId: getCommentsByEstablishmentId
+      responses:
+        '200':
+          description: Se devuelve la información del establecimiento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstablishmentInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /establishments/{establishmentId}:
     parameters:
       - $ref: '#/components/parameters/EstablishmentId'
     get:
@@ -106,7 +128,7 @@ paths:
         - Establishments
       summary: Actualiza la información de un establecimiento determinado
       description: Actualiza la información del establecimiento cuyo id se pasa en la URL
-      operationId: updateEstablishmentById
+      operationId: modifyEstablishment
       responses:
         '200':
           description: Se devuelve la información del establecimiento
@@ -123,8 +145,8 @@ paths:
     delete:
       tags:
         - Establishments
-      summary: Da de baja el un establecimiento
-      description: Dada de baja de un establecimiento cuyo id se pasa en la URL
+      summary: Da de baja de un establecimiento
+      description: Dada de baja un establecimiento cuyo id se pasa en la URL
       operationId: deleteEstablishment
       responses:
         '204':
@@ -143,9 +165,9 @@ paths:
       description: Obtiene la información de todos los usuarios registrados
       operationId: getUsers
       parameters:
-        - name: email
+        - name: username
           in: query
-          description: Filtra por email de usuario
+          description: Filtra por nombre de usuario
           required: false
           schema:
             type: string
@@ -165,7 +187,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserOutDTO'
+                  $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -175,7 +197,7 @@ paths:
         - Users
       summary: Registro de usuarios
       description: Registra un nuevo usuarios en la aplicación
-      operationId: postUsers
+      operationId: addUser
       requestBody:
         content:
           application/json:
@@ -187,12 +209,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserOutDTO'
+                $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /user/{userId}:
+  /users/{userId}:
     parameters:
       - $ref: '#/components/parameters/UserId'
     get:
@@ -219,7 +241,7 @@ paths:
         - Users
       summary: Actualiza la información de un usuario determinado
       description: Actualiza la información del usuario cuyo id se pasa en la URL
-      operationId: updateUserById
+      operationId: modifyUser
       responses:
         '200':
           description: Se devuelve la información del usuario
@@ -236,7 +258,7 @@ paths:
     delete:
       tags:
         - Users
-      summary: Dasa de baja de un usuario
+      summary: Dada de baja de un usuario
       description: Da de baja el usuario cuyo id se pasa en la URL
       operationId: deleteUser
       responses:
@@ -248,28 +270,13 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /comment:
+  /comments:
     get:
       tags:
         - Comments
       summary: Lista de comentarios
       description: Obtiene la información de todos los comentarios registrados
       operationId: getComment
-      parameters:
-        - name: user_id
-          in: query
-          description: Filtra por los comentarios de un usuario
-          required: false
-          schema:
-            type: number
-            default: ''
-        - name: establishment_id
-          in: query
-          description: Filtra por los comentarios de un establecimiento
-          required: false
-          schema:
-            type: number
-            default: ''
       responses:
         '200':
           description: Se devuelve el listado de comentarios correctamente
@@ -278,7 +285,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CommentOutDTO'
+                  $ref: '#/components/schemas/Comment'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -288,7 +295,7 @@ paths:
         - Comments
       summary: Registro de comentarios
       description: Registra un nuevo comentarios en la aplicación
-      operationId: postComments
+      operationId: addComment
       requestBody:
         content:
           application/json:
@@ -300,12 +307,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommentOutDTO'
+                $ref: '#/components/schemas/Comment'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /comment/{commentId}:
+  /comments/{commentId}:
     parameters:
       - $ref: '#/components/parameters/CommentId'
     get:
@@ -332,7 +339,7 @@ paths:
         - Comments
       summary: Actualiza la información de un comentario determinado
       description: Actualiza la información del comentario cuyo id se pasa en la URL
-      operationId: updateCommentById
+      operationId: modifyComment
       responses:
         '200':
           description: Se devuelve la información del comentario
@@ -367,22 +374,7 @@ paths:
         - Favourites
       summary: Lista de favoritos
       description: Obtiene la información de todos los favoritos registrados
-      operationId: getFavourite
-      parameters:
-        - name: user_id
-          in: query
-          description: Filtra por los favoritos de un usuario
-          required: false
-          schema:
-            type: number
-            default: ''
-        - name: establishment_id
-          in: query
-          description: Filtra por los favoritos de un establecimiento
-          required: false
-          schema:
-            type: number
-            default: ''
+      operationId: getFavourites
       responses:
         '200':
           description: Se devuelve el listado de favoritos correctamente
@@ -391,7 +383,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FavouriteOutDTO'
+                  $ref: '#/components/schemas/Favourite'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -413,12 +405,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FavouriteOutDTO'
+                $ref: '#/components/schemas/Favourite'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /favourite/{favouriteId}:
+  /favourites/{favouriteId}:
     parameters:
       - $ref: '#/components/parameters/FavouriteId'
     get:
@@ -445,7 +437,7 @@ paths:
         - Favourites
       summary: Actualiza la información de un favorito determinado
       description: Actualiza la información del favorito cuyo id se pasa en la URL
-      operationId: updateFavouriteById
+      operationId: modifyFavourite
       responses:
         '200':
           description: Se devuelve la información del favorito
@@ -476,7 +468,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    EstablishmentOutDTO:
+    Establishment:
       type: object
       properties:
         id:
@@ -491,7 +483,7 @@ components:
           type: string
           description: Descripción del establecimiento
           example: Restaurante de comida mexicana
-        adress:
+        address:
           type: string
           description: Dirección del establecimiento
           example: Av/ Duque De Palma 102
@@ -514,7 +506,7 @@ components:
           type: string
           description: Descripción del establecimiento
           example: Restaurante de comida mexicana
-        adress:
+        address:
           type: string
           description: Dirección del establecimiento
           example: Av/ Duque De Palma 102
@@ -526,7 +518,7 @@ components:
           type: number
           description: Latitud en el mapa del establecimiento
           example: 2.6690487962296228
-    UserOutDTO:
+    User:
       type: object
       properties:
         id:
@@ -545,10 +537,6 @@ components:
           type: string
           description: Contraseña del usuario
           example: As45v
-        dateOfBirth:
-          type: object
-          description: Fecha de nacimientos del usuario
-          example: 12-02-1998
     UserInDTO:
       type: object
       properties:
@@ -564,25 +552,21 @@ components:
           type: string
           description: Contraseña del usuario
           example: As45v
-        dateOfBirth:
-          type: object
-          description: Fecha de nacimientos del usuario
-          example: 12-02-1998
-    CommentOutDTO:
+    Comment:
       type: object
       properties:
         id:
           type: number
           description: Id del comentario
           example: 1
-        message:
-          type: string
-          description: Descripción del mensaje
-          example: Es un restaurante excelente. ¡Lo recomiendo 100%!
         rating:
           type: number
           description: Puntuación asignada al comentario
           example: 8
+        message:
+          type: string
+          description: Descripción del mensaje
+          example: Es un restaurante excelente. ¡Lo recomiendo 100%!
         datePost:
           type: object
           description: Fecha del comentario
@@ -598,14 +582,14 @@ components:
     CommentInDTO:
       type: object
       properties:
-        message:
-          type: string
-          description: Descripción del mensaje
-          example: Es un restaurante excelente. ¡Lo recomiendo 100%!
         rating:
           type: number
           description: Puntuación asignada al comentario
           example: 8
+        message:
+          type: string
+          description: Descripción del mensaje
+          example: Es un restaurante excelente. ¡Lo recomiendo 100%!
         datePost:
           type: object
           description: Fecha del comentario
@@ -618,7 +602,7 @@ components:
           type: number
           description: Id del establecimiento que recibe el comentario
           example: 1
-    FavouriteOutDTO:
+    Favourite:
       type: object
       properties:
         id:
@@ -773,7 +757,7 @@ components:
         message:
           type: string
           description: Mensaje de error
-          example: Bus not found
+          example: User not found
     InternalServerError:
       type: object
       properties:

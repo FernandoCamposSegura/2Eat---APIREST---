@@ -38,12 +38,12 @@ public class Establishment {
     @Column
     @NotNull
     @NotBlank(message = "latitude is required")
-    private long latitude;
+    private double latitude;
 
     @Column
     @NotNull
     @NotBlank(message = "longitude is required")
-    private long longitude;
+    private double longitude;
 
     @OneToMany(mappedBy = "establishment")
     @JsonBackReference(value = "establishment_comment")

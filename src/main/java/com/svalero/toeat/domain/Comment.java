@@ -10,6 +10,8 @@ import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class Comment {
     @Column
     @NotNull
     @NotBlank(message = "rating is required")
-    private int rating;
+    private double rating;
 
     @Column
     @NotNull
@@ -32,6 +34,7 @@ public class Comment {
     @Column
     @NotNull
     @NotBlank(message = "date is required")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate datePost;
 
     @ManyToOne

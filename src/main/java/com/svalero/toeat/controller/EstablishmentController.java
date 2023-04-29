@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.FieldError;
 
+import com.svalero.toeat.domain.Comment;
 import com.svalero.toeat.domain.Establishment;
 import com.svalero.toeat.domain.dto.EstablishmentInDTO;
 import com.svalero.toeat.exception.ErrorMessage;
@@ -32,6 +33,11 @@ public class EstablishmentController {
     @GetMapping("/establishments/{id}")
     public ResponseEntity<Establishment> getEstablishmentById(@PathVariable long id) throws NotFoundException {
         return new ResponseEntity<>(establishmentService.getEstablishmentById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/establishments/{id}/comments")
+    public ResponseEntity<List<Comment>> getCommentByEstablishmentId(@PathVariable long id) throws NotFoundException {
+        return new ResponseEntity<>(establishmentService.getCommentByEstablishmentId(id), HttpStatus.OK);
     }
 
     @PostMapping("/establishments")

@@ -39,16 +39,6 @@ public class CommentController {
         return new ResponseEntity<>(commentService.getCommentById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/comments/{establishment_id}/establishment")
-    public ResponseEntity<List<Comment>> getCommentsByEstablishment(@PathVariable long establishment_id) throws NotFoundException {
-        return new ResponseEntity<>(commentService.getCommentsByEstablishment(establishment_id), HttpStatus.OK);
-    }
-
-    // @GetMapping("/comments/{establishment_id}")
-    // public ResponseEntity<List<Integer>> getRatingsByEstablishment(@PathVariable long establishment_id) throws NotFoundException {
-    //     return new ResponseEntity<>(commentService.getRatingsByEstablishment(establishment_id), HttpStatus.OK);
-    // }
-
     @PostMapping("/comments")
     public ResponseEntity<Comment> addComment(@RequestBody CommentInDTO commentInDTO) throws NotFoundException {
         Comment comment = commentService.addComment(commentInDTO);
