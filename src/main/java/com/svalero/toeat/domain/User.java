@@ -1,12 +1,16 @@
 package com.svalero.toeat.domain;
 
-import jakarta.persistence.*;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +40,8 @@ public class User {
     @NotNull
     @NotBlank
     private Role role = Role.USER;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference(value = "user_comment")
+    private List<Comment> comments;
 }
