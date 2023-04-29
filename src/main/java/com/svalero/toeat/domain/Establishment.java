@@ -27,7 +27,7 @@ public class Establishment {
 
     @Column
     @NotNull
-    @NotBlank(message = "adress is required")
+    @NotBlank(message = "description is required")
     private String description;
 
     @Column
@@ -48,4 +48,8 @@ public class Establishment {
     @OneToMany(mappedBy = "establishment")
     @JsonBackReference(value = "establishment_comment")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "establishment")
+    @JsonBackReference(value = "establishment_favourite")
+    private List<Favourite> favourites;
 }

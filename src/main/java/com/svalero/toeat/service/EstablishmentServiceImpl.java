@@ -26,6 +26,17 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     }
 
     @Override
+    public Establishment getEstablishmentById(long id) throws NotFoundException {
+        return establishmentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(new Establishment()));
+    }
+
+    @Override
+    public List<Establishment> getEstablishmentsByName(String name) {
+        return establishmentRepository.findEstablishmentsByName(name);
+    }
+
+    @Override
     public Establishment addEstablishment(EstablishmentInDTO establishmentInDTO) {
         Establishment establishment = new Establishment();
 

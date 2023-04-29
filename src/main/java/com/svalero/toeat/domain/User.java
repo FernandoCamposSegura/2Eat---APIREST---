@@ -44,4 +44,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonBackReference(value = "user_comment")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference(value = "user_favourite")
+    private List<Favourite> favourites;
 }

@@ -9,6 +9,10 @@ import com.svalero.toeat.exception.NotFoundException;
 public interface EstablishmentService {
     List<Establishment> findAll();
 
+    Establishment getEstablishmentById(long id) throws NotFoundException;
+
+    List<Establishment> getEstablishmentsByName(String name);
+
     Establishment addEstablishment(EstablishmentInDTO establishmentInDTO);
 
     void deleteEstablishment(long id) throws NotFoundException;

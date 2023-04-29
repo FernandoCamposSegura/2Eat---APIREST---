@@ -23,8 +23,15 @@ public class EstablishmentController {
     private EstablishmentService establishmentService;
 
     @GetMapping("/establishments")
-    public ResponseEntity<List<Establishment>> getEstablishments() {
+    public ResponseEntity<List<Establishment>> getEstablishments(@RequestParam(name = "name", defaultValue = "", required = false) String name) {
+        if(!name.equals(""))
+            return new ResponseEntity<>(establishmentService.getEstablishmentsByName(name), HttpStatus.OK);
         return new ResponseEntity<>(establishmentService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/establishments/{id}")
+    public ResponseEntity<Establishment> getEstablishmentById(@PathVariable long id) throws NotFoundException {
+        return new ResponseEntity<>(establishmentService.getEstablishmentById(id), HttpStatus.OK);
     }
 
     @PostMapping("/establishments")
@@ -39,7 +46,7 @@ public class EstablishmentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/establishment/{id}")
+    @PutMapping("/establishments/{id}")
     public ResponseEntity<Establishment> modifyEstablishment(@PathVariable long id, @RequestBody EstablishmentInDTO establishmentInDTO) throws NotFoundException{
         Establishment establishment = establishmentService.modifyEstablishment(id, establishmentInDTO);
         return ResponseEntity.status(HttpStatus.OK).body(establishment);

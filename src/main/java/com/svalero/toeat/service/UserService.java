@@ -9,6 +9,8 @@ import com.svalero.toeat.exception.NotFoundException;
 public interface UserService {
     List<User> findAll();
 
+    User getUserById(long id) throws NotFoundException;
+
     User addUser(UserInDTO userInDTO);
 
     void deleteUser(long id) throws NotFoundException;

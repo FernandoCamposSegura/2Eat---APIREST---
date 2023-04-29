@@ -9,6 +9,10 @@ import com.svalero.toeat.exception.NotFoundException;
 public interface CommentService {
     List<Comment> findAll();
 
+    Comment getCommentById(long id) throws NotFoundException;
+
+    List<Comment> getCommentsByEstablishment(long establishment_id) throws NotFoundException;
+
     Comment addComment(CommentInDTO commentInDTO) throws NotFoundException;
 
     void deleteComment(long id) throws NotFoundException;

@@ -5,49 +5,49 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.FieldError;
 
-import com.svalero.toeat.domain.User;
-import com.svalero.toeat.domain.dto.UserInDTO;
+import com.svalero.toeat.domain.Favourite;
+import com.svalero.toeat.domain.dto.FavouriteInDTO;
 import com.svalero.toeat.exception.ErrorMessage;
 import com.svalero.toeat.exception.NotFoundException;
-import com.svalero.toeat.service.UserService;
+import com.svalero.toeat.service.FavouriteService;
 
 @RestController
-public class UserController {
+public class FavouriteController {
     @Autowired
-    private UserService userService;
+    private FavouriteService favouriteService;
 
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    @GetMapping("/favourites")
+    public ResponseEntity<List<Favourite>> getFavourites() {
+        return new ResponseEntity<>(favouriteService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) throws NotFoundException {
-        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    @GetMapping("/favourites/{id}")
+    public ResponseEntity<Favourite> getFavouriteById(@PathVariable long id) throws NotFoundException {
+        return new ResponseEntity<>(favouriteService.getFavouriteById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<User> addUser(@RequestBody UserInDTO userInDTO) {
-        User user = userService.addUser(userInDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    @PostMapping("/favourites")
+    public ResponseEntity<Favourite> addFavourite(@RequestBody FavouriteInDTO favouriteInDTO) throws NotFoundException{
+        Favourite favourite = favouriteService.addFavourite(favouriteInDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(favourite);
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable long id) throws NotFoundException {
-        userService.deleteUser(id);
+    @DeleteMapping("/favourites/{id}")
+    public ResponseEntity<Void> deleteFavourite(@PathVariable long id) throws NotFoundException {
+        favouriteService.deleteFavourite(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<User> modifyUser(@PathVariable long id, @RequestBody UserInDTO userInDTO) throws NotFoundException{
-        User user = userService.modifyUser(id, userInDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+    @PutMapping("/favourites/{id}")
+    public ResponseEntity<Favourite> modifyfavourite(@PathVariable long id, @RequestBody FavouriteInDTO favouriteInDTO) throws NotFoundException{
+        Favourite favourite = favouriteService.modifyFavourite(id, favouriteInDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(favourite);
     }
 
     @ExceptionHandler(NotFoundException.class)
