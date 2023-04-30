@@ -1,6 +1,5 @@
 package com.svalero.toeat.domain.dto;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
