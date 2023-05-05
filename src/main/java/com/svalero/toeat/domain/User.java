@@ -39,7 +39,7 @@ public class User {
     @Column
     @NotNull
     @NotBlank
-    private Role role = Role.ADMIN;
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference(value = "user_comment")

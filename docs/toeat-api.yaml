@@ -22,28 +22,6 @@ paths:
       summary: Lista de establecimientos
       description: Obtiene la información de todos los establecimientos registrados
       operationId: getEstablishments
-      parameters:
-        - name: name
-          in: query
-          description: Filtra por nombre de establecimiento
-          required: false
-          schema:
-            type: string
-            default: ''
-        - name: longitude
-          in: query
-          description: Filtra por longitud de localización
-          required: false
-          schema:
-            type: number
-            default: ''
-        - name: latitude
-          in: query
-          description: Filtra por latitud de localización
-          required: false
-          schema:
-            type: number
-            default: ''
       responses:
         '200':
           description: Se devuelve el listado de establecimientos correctamente
@@ -53,6 +31,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Establishment'
+              examples:
+                example1:
+                  $ref: '#/components/examples/EstablishmentRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/EstablishmentRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -68,6 +51,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/EstablishmentInDTO'
+            examples:
+              example1:
+                $ref: '#/components/examples/EstablishmentRegisterBody1'
+              example2:
+                $ref: '#/components/examples/EstablishmentRegisterBody2'
       responses:
         '201':
           description: El establecimiento se ha registrado correctamente
@@ -117,6 +105,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EstablishmentInfo'
+              examples:
+                  example1:
+                    $ref: '#/components/examples/EstablishmentRegisterBody1'
+                  example2:
+                    $ref: '#/components/examples/EstablishmentRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -129,6 +122,16 @@ paths:
       summary: Actualiza la información de un establecimiento determinado
       description: Actualiza la información del establecimiento cuyo id se pasa en la URL
       operationId: modifyEstablishment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstablishmentInDTO'
+            examples:
+              example1:
+                $ref: '#/components/examples/EstablishmentRegisterBody1'
+              example2:
+                $ref: '#/components/examples/EstablishmentRegisterBody2'
       responses:
         '200':
           description: Se devuelve la información del establecimiento
@@ -136,6 +139,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EstablishmentInfo'
+              examples:
+                example1:
+                  $ref: '#/components/examples/EstablishmentRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/EstablishmentRegisterBody2'
+            
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -188,6 +197,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                example1:
+                  $ref: '#/components/examples/UserRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/UserRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -203,6 +217,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserInDTO'
+            examples:
+              example1:
+                $ref: '#/components/examples/UserRegisterBody1'
+              example2:
+                $ref: '#/components/examples/UserRegisterBody2'
       responses:
         '201':
           description: El usuario se ha registrado correctamente
@@ -230,6 +249,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserInfo'
+              examples:
+                example1:
+                  $ref: '#/components/examples/UserRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/UserRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -242,6 +266,16 @@ paths:
       summary: Actualiza la información de un usuario determinado
       description: Actualiza la información del usuario cuyo id se pasa en la URL
       operationId: modifyUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInDTO'
+            examples:
+              example1:
+                $ref: '#/components/examples/UserRegisterBody1'
+              example2:
+                $ref: '#/components/examples/UserRegisterBody2'
       responses:
         '200':
           description: Se devuelve la información del usuario
@@ -249,6 +283,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserInfo'
+              examples:
+                example1:
+                  $ref: '#/components/examples/UserRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/UserRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -283,9 +322,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Comment'
+                $ref: '#/components/schemas/Comment'
+              examples:
+                example1:
+                  $ref: '#/components/examples/CommentRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/CommentRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -301,6 +343,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CommentInDTO'
+            examples:
+              example1:
+                $ref: '#/components/examples/CommentRegisterBody1'
+              example2:
+                $ref: '#/components/examples/CommentRegisterBody2'
       responses:
         '201':
           description: El comentario se ha registrado correctamente
@@ -328,6 +375,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentInfo'
+              examples:
+                example1:
+                  $ref: '#/components/examples/CommentRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/CommentRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -340,6 +392,16 @@ paths:
       summary: Actualiza la información de un comentario determinado
       description: Actualiza la información del comentario cuyo id se pasa en la URL
       operationId: modifyComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInDTO'
+            examples:
+              example1:
+                $ref: '#/components/examples/CommentRegisterBody1'
+              example2:
+                $ref: '#/components/examples/CommentRegisterBody2'
       responses:
         '200':
           description: Se devuelve la información del comentario
@@ -347,6 +409,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentInfo'
+              examples:
+                example1:
+                  $ref: '#/components/examples/CommentRegisterBody1'
+                example2:
+                  $ref: '#/components/examples/CommentRegisterBody2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -674,6 +741,10 @@ components:
           type: string
           description: Contraseña del usuario
           example: r3rbhu2
+        role:
+          type: object
+          description: Rol del usuario
+          example: USER
     CommentInfo:
       type: object
       allOf:
@@ -819,3 +890,50 @@ components:
       required: true
       schema:
         type: integer
+  examples:
+    EstablishmentRegisterBody1:
+      summary: Ejemplo de registro de establecimiento 1
+      value:
+        name: Pollo loco
+        description: Restaurante de comida mexicana
+        address: Av/ Duque De Palma 102
+        longitude: 39.59002265639826,
+        latitude: 2.6690487962296228
+    EstablishmentRegisterBody2:
+      summary: Ejemplo de registro de establecimiento 2
+      value:
+        name: Katachi
+        description: Restaurante de comida japonesa
+        address: Plaza Rey Jaume II
+        longitude: -5.492202938,
+        latitude: 18,747372773
+    UserRegisterBody1:
+      summary: Ejemplo de registro de usuario 1
+      value:
+        username: nando1903
+        email: nando@test.com
+        password: As45v"
+        role: USER
+    UserRegisterBody2:
+      summary: Ejemplo de registro de usuario 2
+      value:
+        username: ana1004
+        email: ana@test.com
+        password: ana1004ana
+        role: ADMIN
+    CommentRegisterBody1:
+      summary: Ejemplo de registro de comentario 1
+      value:
+        rating: 8,
+        message: Es un restaurante excelente. ¡Lo recomiendo 100%!,
+        datePost: 15-10-2023,
+        user_id: 1,
+        establishment_id: 1
+    CommentRegisterBody2:
+      summary: Ejemplo de registro de comentario 2
+      value:
+        rating: 2,
+        message: La comida no es muy buena y tardan mucho en atenderte,
+        datePost: 01-05-2022,
+        user_id: 2,
+        establishment_id: 2
