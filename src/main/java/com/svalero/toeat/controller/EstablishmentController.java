@@ -24,9 +24,9 @@ public class EstablishmentController {
     private EstablishmentService establishmentService;
 
     @GetMapping("/establishments")
-    public ResponseEntity<List<Establishment>> getEstablishments(@RequestParam(name = "name", defaultValue = "", required = false) String name) {
-        if(!name.equals(""))
-            return new ResponseEntity<>(establishmentService.getEstablishmentsByName(name), HttpStatus.OK);
+    public ResponseEntity<List<Establishment>> getEstablishments(@RequestParam(name = "filter", defaultValue = "", required = false) String filter) {
+        if(!filter.equals(""))
+            return new ResponseEntity<>(establishmentService.getEstablishmentsByFilter(filter), HttpStatus.OK);
         return new ResponseEntity<>(establishmentService.findAll(), HttpStatus.OK);
     }
 

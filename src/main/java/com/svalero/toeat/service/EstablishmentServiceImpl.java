@@ -33,11 +33,6 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     }
 
     @Override
-    public List<Establishment> getEstablishmentsByName(String name) {
-        return establishmentRepository.findEstablishmentsByName(name);
-    }
-
-    @Override
     public Establishment addEstablishment(EstablishmentInDTO establishmentInDTO) {
         Establishment establishment = new Establishment();
 
@@ -70,6 +65,11 @@ public class EstablishmentServiceImpl implements EstablishmentService {
         .orElseThrow(() -> new NotFoundException(new Establishment()));
 
         return establishment.getComments();
+    }
+
+    @Override
+    public List<Establishment> getEstablishmentsByFilter(String filter) {
+        return establishmentRepository.findEstablishmentsByFilter(filter);
     }
     
 }

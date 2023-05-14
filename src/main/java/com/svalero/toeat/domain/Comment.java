@@ -37,7 +37,7 @@ public class Comment {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate datePost;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

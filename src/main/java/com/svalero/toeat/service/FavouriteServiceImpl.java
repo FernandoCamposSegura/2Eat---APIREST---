@@ -78,10 +78,10 @@ public class FavouriteServiceImpl implements FavouriteService {
         @Override
         public List<Favourite> getFavouriteByUserAndEstablishment(long user_id, long establishment_id)
                         throws NotFoundException {
-                User user = userRepository.findById(user_id)
+                userRepository.findById(user_id)
                                 .orElseThrow(() -> new NotFoundException(new User()));
 
-                Establishment establishment = establishmentRepository.findById(establishment_id)
+                establishmentRepository.findById(establishment_id)
                                 .orElseThrow(() -> new NotFoundException(new Establishment()));
 
                 return favouriteRepository.findFavouriteByUserIdAndEstablishmentId(user_id, establishment_id);

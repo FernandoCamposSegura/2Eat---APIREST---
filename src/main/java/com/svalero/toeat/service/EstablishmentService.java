@@ -12,7 +12,7 @@ public interface EstablishmentService {
 
     Establishment getEstablishmentById(long id) throws NotFoundException;
 
-    List<Establishment> getEstablishmentsByName(String name);
+    List<Establishment> getEstablishmentsByFilter(String filter);
 
     List<Comment> getCommentByEstablishmentId(long id) throws NotFoundException;
 

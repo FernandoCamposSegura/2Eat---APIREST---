@@ -41,7 +41,7 @@ public class User {
     @NotBlank
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference(value = "user_comment")
     private List<Comment> comments;
 
