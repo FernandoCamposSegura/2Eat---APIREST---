@@ -1,0 +1,621 @@
+{
+	"info": {
+		"_postman_id": "9bf6c647-b362-4ecb-bfe0-3f770c434ce3",
+		"name": "ToEat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/users",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/{user_id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/users/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user?username&password",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/user?username=test1&password=test1234",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "test1"
+								},
+								{
+									"key": "password",
+									"value": "test1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test1\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"test1234\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/users",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/{user_id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"test1234\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/users/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users/{user_id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"test1234\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/users/4",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Establishments",
+			"item": [
+				{
+					"name": "establishments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/establishments",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"establishments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "establishments/{establishments_id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/establishments/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"establishments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "establishments/{establishments_id}/comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/establishments/2/comments",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"establishments",
+								"2",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "establishments",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('randomLatLng', JSON.stringify(getRandomLatLngInSpain()));\r",
+									"\r",
+									"function getRandomLatLngInSpain() {\r",
+									"    const minLat = 35.949027;\r",
+									"    const maxLat = 43.748953;\r",
+									"    const minLng = -9.393016;\r",
+									"    const maxLng = 3.428733;\r",
+									"    \r",
+									"    const lat = Math.random() * (maxLat - minLat) + minLat;\r",
+									"    const lng = Math.random() * (maxLng - minLng) + minLng;\r",
+									"    \r",
+									"    return { lat, lng };\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"{{$randomCompanyName}}\",\r\n   \"description\":\"{{$randomProductAdjective}}\",\r\n   \"adress\":\"{{$randomStreetAddress}}\",\r\n   \"latitude\": 32,\r\n   \"longitude\": -6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/establishments",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"establishments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "establishments/{establishments_id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\":\"{{$randomCompanyName}}\",\r\n   \"description\":\"{{$randomProductAdjective}}\",\r\n   \"adress\":\"{{$randomStreetAddress}}\",\r\n   \"latitude\": 32,\r\n   \"longitude\": -6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/establishments/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"establishments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "establishments/{establishments_id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/establishments/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"establishments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/comments",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comments/{comment_id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"test1234\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/comments/5",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"comments",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\":2.5,\r\n    \"message\":\"Deberían darse más prisa a la hora de servir\",\r\n    \"datPost\":\"2023-04-21\",\r\n    \"user_id\":1,\r\n    \"establishment_id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/comments",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comments/{comment_id}",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var brand = [\"Seat\",\"BMW\",\"Mercedes\",\"Audi\",\"Toyota\"]\r",
+									"\r",
+									"var currentBrand = brand[_.random(brand.length -1)];\r",
+									"pm.collectionVariables.set(\"randomBrand\", currentBrand);\r",
+									"\r",
+									"switch(currentBrand) {\r",
+									"    case \"Seat\":\r",
+									"    var model = [\"Ibiza\",\"Ateca\",\"Leon\"]\r",
+									"    break;\r",
+									"\r",
+									"    case \"BMW\":\r",
+									"    var model = [\"Serie 1\",\"X1\",\"Serie 3\"]\r",
+									"    break;\r",
+									"\r",
+									"    case \"Mercedes\":\r",
+									"    var model = [\"Clase A\",\"Clase B\",\"Clase C\"]\r",
+									"    break;\r",
+									"\r",
+									"    case \"Audi\":\r",
+									"    var model = [\"A1\",\"A3\",\"TT\"]\r",
+									"    break;\r",
+									"\r",
+									"    case \"Toyota\":\r",
+									"    var model = [\"CX-7\",\"Auris\",\"Yaris\"]\r",
+									"    break;\r",
+									"}\r",
+									"\r",
+									"pm.collectionVariables.set(\"randomModel\", model[_.random(model.length -1)]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 5,\r\n    \"message\": \"Muy bueno todo\",\r\n    \"datePost\": \"2023-02-02\",\r\n    \"user_id\": 1,\r\n    \"establishment_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/comments/5",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"comments",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comments/{comment_id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"test1234\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/comments/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favourites",
+			"item": [
+				{
+					"name": "favourites",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/favourites",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"favourites"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "establishment_id",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favourites/{favourite_id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/favourites/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"favourites",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favourites",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 1,\r\n    \"establishment_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/favourites",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"favourites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favourites/{favourite_id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"test1234\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/favourites/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"favourites",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favourites/{favourite_id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/favourites/3",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"favourites",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

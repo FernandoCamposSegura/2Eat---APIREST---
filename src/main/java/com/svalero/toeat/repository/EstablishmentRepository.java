@@ -12,7 +12,7 @@ import org.springframework.data.repository.CrudRepository;
 @Repository
 public interface EstablishmentRepository extends CrudRepository<Establishment, Long> {
     public List<Establishment> findAll();
-    
-    @Query( value = "SELECT * FROM establishments WHERE name=?", nativeQuery = true)
-    List<Establishment> findEstablishmentsByName(String name);
+
+    @Query( value = "SELECT * FROM establishments WHERE INSTR(name, ?) != 0", nativeQuery = true)
+    List<Establishment> findEstablishmentsByFilter(String filter);
 }

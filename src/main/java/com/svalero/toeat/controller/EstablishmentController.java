@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.FieldError;
 
+import com.svalero.toeat.domain.Comment;
 import com.svalero.toeat.domain.Establishment;
 import com.svalero.toeat.domain.dto.EstablishmentInDTO;
 import com.svalero.toeat.exception.ErrorMessage;
@@ -23,15 +24,20 @@ public class EstablishmentController {
     private EstablishmentService establishmentService;
 
     @GetMapping("/establishments")
-    public ResponseEntity<List<Establishment>> getEstablishments(@RequestParam(name = "name", defaultValue = "", required = false) String name) {
-        if(!name.equals(""))
-            return new ResponseEntity<>(establishmentService.getEstablishmentsByName(name), HttpStatus.OK);
+    public ResponseEntity<List<Establishment>> getEstablishments(@RequestParam(name = "filter", defaultValue = "", required = false) String filter) {
+        if(!filter.equals(""))
+            return new ResponseEntity<>(establishmentService.getEstablishmentsByFilter(filter), HttpStatus.OK);
         return new ResponseEntity<>(establishmentService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/establishments/{id}")
     public ResponseEntity<Establishment> getEstablishmentById(@PathVariable long id) throws NotFoundException {
         return new ResponseEntity<>(establishmentService.getEstablishmentById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/establishments/{id}/comments")
+    public ResponseEntity<List<Comment>> getCommentByEstablishmentId(@PathVariable long id) throws NotFoundException {
+        return new ResponseEntity<>(establishmentService.getCommentByEstablishmentId(id), HttpStatus.OK);
     }
 
     @PostMapping("/establishments")

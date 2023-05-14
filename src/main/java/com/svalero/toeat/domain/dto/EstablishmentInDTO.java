@@ -11,6 +11,6 @@ public class EstablishmentInDTO {
     private String name;
     private String description;
     private String adress;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
 }

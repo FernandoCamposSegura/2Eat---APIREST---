@@ -27,6 +27,13 @@ public class UserController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<User> getUserByUsernameAndPassword(@RequestParam(name = "username", defaultValue = "", required = true) String username,
+                            @RequestParam(name = "password", defaultValue = "", required = true) String password) 
+                            throws NotFoundException {
+        return new ResponseEntity<>(userService.getUserByUsernameAndPassword(username, password), HttpStatus.OK);
+    }
+
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id) throws NotFoundException {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);

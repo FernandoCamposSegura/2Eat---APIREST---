@@ -17,62 +17,73 @@ import com.svalero.toeat.repository.UserRepository;
 @Service
 public class FavouriteServiceImpl implements FavouriteService {
 
-    @Autowired
-    FavouriteRepository favouriteRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EstablishmentRepository establishmentRepository;
+        @Autowired
+        FavouriteRepository favouriteRepository;
+        @Autowired
+        UserRepository userRepository;
+        @Autowired
+        EstablishmentRepository establishmentRepository;
 
-    @Override
-    public List<Favourite> findAll() {
-        return favouriteRepository.findAll();
-    }
+        @Override
+        public List<Favourite> findAll() {
+                return favouriteRepository.findAll();
+        }
 
-    @Override
-    public Favourite getFavouriteById(long id) throws NotFoundException {
-        return favouriteRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(new Favourite()));
-    }
+        @Override
+        public Favourite getFavouriteById(long id) throws NotFoundException {
+                return favouriteRepository.findById(id)
+                                .orElseThrow(() -> new NotFoundException(new Favourite()));
+        }
 
-    @Override
-    public Favourite addFavourite(FavouriteInDTO favouriteInDTO) throws NotFoundException {
-        Favourite favourite = new Favourite();
+        @Override
+        public Favourite addFavourite(FavouriteInDTO favouriteInDTO) throws NotFoundException {
+                Favourite favourite = new Favourite();
 
-        User user = userRepository.findById(favouriteInDTO.getUser_id())
-                .orElseThrow(() -> new NotFoundException(new User()));
+                User user = userRepository.findById(favouriteInDTO.getUser_id())
+                                .orElseThrow(() -> new NotFoundException(new User()));
 
-        Establishment establishment = establishmentRepository.findById(favouriteInDTO.getEstablishment_id())
-                .orElseThrow(() -> new NotFoundException(new Establishment()));
+                Establishment establishment = establishmentRepository.findById(favouriteInDTO.getEstablishment_id())
+                                .orElseThrow(() -> new NotFoundException(new Establishment()));
 
-        favourite.setUser(user);
-        favourite.setEstablishment(establishment);
-         
-        return favouriteRepository.save(favourite); 
-    }
+                favourite.setUser(user);
+                favourite.setEstablishment(establishment);
 
-    @Override
-    public void deleteFavourite(long id) throws NotFoundException {
-        Favourite favourite = favouriteRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(new Favourite()));
-        favouriteRepository.delete(favourite);
-    }
+                return favouriteRepository.save(favourite);
+        }
 
-    @Override
-    public Favourite modifyFavourite(long id, FavouriteInDTO favouriteInDTO) throws NotFoundException {
-        Favourite favouriteModified = favouriteRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(new Favourite()));
+        @Override
+        public void deleteFavourite(long id) throws NotFoundException {
+                Favourite favourite = favouriteRepository.findById(id)
+                                .orElseThrow(() -> new NotFoundException(new Favourite()));
+                favouriteRepository.delete(favourite);
+        }
 
-        User user = userRepository.findById(favouriteInDTO.getUser_id())
-                .orElseThrow(() -> new NotFoundException(new User()));
+        @Override
+        public Favourite modifyFavourite(long id, FavouriteInDTO favouriteInDTO) throws NotFoundException {
+                Favourite favouriteModified = favouriteRepository.findById(id)
+                                .orElseThrow(() -> new NotFoundException(new Favourite()));
 
-        Establishment establishment = establishmentRepository.findById(favouriteInDTO.getEstablishment_id())
-                .orElseThrow(() -> new NotFoundException(new Establishment()));
+                User user = userRepository.findById(favouriteInDTO.getUser_id())
+                                .orElseThrow(() -> new NotFoundException(new User()));
 
-        favouriteModified.setUser(user);
-        favouriteModified.setEstablishment(establishment);
+                Establishment establishment = establishmentRepository.findById(favouriteInDTO.getEstablishment_id())
+                                .orElseThrow(() -> new NotFoundException(new Establishment()));
 
-        return favouriteRepository.save(favouriteModified);
-    }
-    
+                favouriteModified.setUser(user);
+                favouriteModified.setEstablishment(establishment);
+
+                return favouriteRepository.save(favouriteModified);
+        }
+
+        @Override
+        public List<Favourite> getFavouriteByUserAndEstablishment(long user_id, long establishment_id)
+                        throws NotFoundException {
+                userRepository.findById(user_id)
+                                .orElseThrow(() -> new NotFoundException(new User()));
+
+                establishmentRepository.findById(establishment_id)
+                                .orElseThrow(() -> new NotFoundException(new Establishment()));
+
+                return favouriteRepository.findFavouriteByUserIdAndEstablishmentId(user_id, establishment_id);
+        }
 }

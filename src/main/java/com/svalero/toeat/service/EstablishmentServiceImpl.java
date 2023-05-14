@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.svalero.toeat.domain.Comment;
 import com.svalero.toeat.domain.Establishment;
 import com.svalero.toeat.domain.dto.EstablishmentInDTO;
 import com.svalero.toeat.exception.NotFoundException;
@@ -29,11 +30,6 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     public Establishment getEstablishmentById(long id) throws NotFoundException {
         return establishmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(new Establishment()));
-    }
-
-    @Override
-    public List<Establishment> getEstablishmentsByName(String name) {
-        return establishmentRepository.findEstablishmentsByName(name);
     }
 
     @Override
@@ -61,6 +57,19 @@ public class EstablishmentServiceImpl implements EstablishmentService {
         modelMapper.map(establishmentInDTO, establishmentModified);
 
         return establishmentRepository.save(establishmentModified);
+    }
+
+    @Override
+    public List<Comment> getCommentByEstablishmentId(long id) throws NotFoundException {
+        Establishment establishment = establishmentRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(new Establishment()));
+
+        return establishment.getComments();
+    }
+
+    @Override
+    public List<Establishment> getEstablishmentsByFilter(String filter) {
+        return establishmentRepository.findEstablishmentsByFilter(filter);
     }
     
 }

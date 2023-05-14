@@ -15,13 +15,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "user")
+@Entity(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(unique = true)
     @NotNull
     @NotBlank(message = "username is required")
     private String username;
@@ -39,9 +39,9 @@ public class User {
     @Column
     @NotNull
     @NotBlank
-    private Role role = Role.USER;
+    private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference(value = "user_comment")
     private List<Comment> comments;
 

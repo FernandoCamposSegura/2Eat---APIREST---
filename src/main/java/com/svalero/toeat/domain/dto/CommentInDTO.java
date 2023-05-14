@@ -1,6 +1,6 @@
 package com.svalero.toeat.domain.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentInDTO {
-    private int rating;
+    private double rating;
     private String message;
-    private Date datePost;
+    private LocalDate datePost;
     private long user_id;
     private long establishment_id;
 }
